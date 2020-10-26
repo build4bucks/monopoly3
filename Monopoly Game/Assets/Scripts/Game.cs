@@ -10,7 +10,7 @@ public class Game : MonoBehaviour
 {
 
     //create database
-    string[,] arr2d = new string[40, 18]
+    string[,] array1 = new string[40, 18]
 
     {
 
@@ -59,6 +59,21 @@ public class Game : MonoBehaviour
 
     };
 
+    string[,] array2 = new string[,]
+    {
+        {"m1","FALSE1","bank1"},
+        {"m2","FALSE2","bank2"},
+        {"m3","FALSE","bank"},
+        {"m4","FALSE","bank"},
+        {"m5","FALSE","bank"},
+        {"m6","FALSE","bank"},
+        {"m7","FALSE","bank"},
+        {"m8","FALSE","bank"},
+        {"m9","FALSE","bank"},
+        {"m10","FALSE","bank"},
+        {"m11","FALSE","bank"}
+    };
+
     //create more database 
     int turns_counter; //how many turns played so far by current player 
     int dice1; //result of dice1 roll 
@@ -92,10 +107,29 @@ public class Game : MonoBehaviour
     // Update is called once per frame 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K))
+        { //Start of the K Loop  
+            Debug.Log("K1. turns_counter=" + turns_counter);
+            Debug.Log("K2. dice1=" + dice1 + " dice2=" + dice2 + " dice_total=" + dice_total);
+            Debug.Log("K3. doubles=" + doubles + " doubles_counter=" + doubles_counter);
+            Debug.Log("K4a. tile_number=" + tile_number + " tile_name=" + tile_name);
+            Debug.Log("K4b. tile_number=" + tile_number + " tile_cost=" + tile_cost);
+            Debug.Log("K5. jailed=" + jailed);
+            Debug.Log("K6. money_banker=" + money_banker);
+            Debug.Log("K7. money_player1=" + money_player1);
+            Debug.Log("K8. money_player2=" + money_player2);
+            Debug.Log("K/////////////////////");
+        } // End of the K Loop
+
         if (Input.GetKeyDown(KeyCode.D))
         { //Start of the D Loop
 
-
+            Debug.Log("0,0=" + array2[0, 0]);
+            Debug.Log("0,1=" + array2[0, 1]);
+            Debug.Log("0,2=" + array2[0, 2]);
+            Debug.Log("1,0=" + array2[1, 0]);
+            Debug.Log("1,1=" + array2[1, 1]);
+            Debug.Log("1,2=" + array2[1, 2]);
 
         } //End of the D Loop
 
@@ -116,30 +150,30 @@ public class Game : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {  //Start of the T Loop
-            arr2d[1, 0] = "Sami's Place1"; //Sami
-            arr2d[2, 0] = "Jack's Place2"; //Sami
-            arr2d[3, 0] = "Sami's Place3"; //Sami
-            arr2d[4, 0] = "Jack's Place4"; //Sami
-            arr2d[5, 0] = "Sami's Place5"; //Sami
-            arr2d[6, 0] = "Jack's Place6"; //Sami
-            arr2d[7, 0] = "Sami's Place7"; //Sami
-            arr2d[8, 0] = "Jack's Place8"; //Sami
-            arr2d[9, 0] = "Sami's Place9"; //Sami
-            arr2d[10, 0] = "Jack's Place10"; //Sami
-            //Debug.Log("TEST=" + arr2d[tile_number, 16]);
+            array1[1, 0] = "Sami's Place1"; //Sami
+            array1[2, 0] = "Jack's Place2"; //Sami
+            array1[3, 0] = "Sami's Place3"; //Sami
+            array1[4, 0] = "Jack's Place4"; //Sami
+            array1[5, 0] = "Sami's Place5"; //Sami
+            array1[6, 0] = "Jack's Place6"; //Sami
+            array1[7, 0] = "Sami's Place7"; //Sami
+            array1[8, 0] = "Jack's Place8"; //Sami
+            array1[9, 0] = "Sami's Place9"; //Sami
+            array1[10, 0] = "Jack's Place10"; //Sami
+            //Debug.Log("TEST=" + array1[tile_number, 16]);
 
-            Debug.Log("tile1_name=" + arr2d[1, 0]);
-            Debug.Log("tile2_name=" + arr2d[2, 0]);
-            Debug.Log("tile3_name=" + arr2d[3, 0]);
-            Debug.Log("tile4_name=" + arr2d[4, 0]);
-            Debug.Log("tile5_name=" + arr2d[5, 0]);
-            Debug.Log("tile6_name=" + arr2d[6, 0]);
-            Debug.Log("tile7_name=" + arr2d[7, 0]);
-            Debug.Log("tile8_name=" + arr2d[8, 0]);
-            Debug.Log("tile9_name=" + arr2d[9, 0]);
-            Debug.Log("tile10_name=" + arr2d[10, 0]);
-            //arr2d[tile_number, 16] = "hello"; //Sami
-            //Debug.Log("TEST=" + arr2d[tile_number, 16]);
+            Debug.Log("tile1_name=" + array1[1, 0]);
+            Debug.Log("tile2_name=" + array1[2, 0]);
+            Debug.Log("tile3_name=" + array1[3, 0]);
+            Debug.Log("tile4_name=" + array1[4, 0]);
+            Debug.Log("tile5_name=" + array1[5, 0]);
+            Debug.Log("tile6_name=" + array1[6, 0]);
+            Debug.Log("tile7_name=" + array1[7, 0]);
+            Debug.Log("tile8_name=" + array1[8, 0]);
+            Debug.Log("tile9_name=" + array1[9, 0]);
+            Debug.Log("tile10_name=" + array1[10, 0]);
+            //array1[tile_number, 16] = "hello"; //Sami
+            //Debug.Log("TEST=" + array1[tile_number, 16]);
 
         } //End of the T Loop
 
@@ -148,8 +182,8 @@ public class Game : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         { //Start of the B Loop
 
-            tile_name = arr2d[tile_number, 0];
-            tile_cost = arr2d[tile_number, 4];
+            tile_name = array1[tile_number, 0];
+            tile_cost = array1[tile_number, 4];
             Debug.Log("tile_name=" + tile_name);
             Debug.Log("tile_cost=" + tile_cost);
             tile_cost_i = Convert.ToInt16(tile_cost);
@@ -158,14 +192,14 @@ public class Game : MonoBehaviour
             Debug.Log("money_player1=" + money_player1);
             Debug.Log("money_player2=" + money_player2);
             Debug.Log("money_all=" + money_all);
-            Debug.Log("before owner=" + arr2d[tile_number, 13]);
+            Debug.Log("before owner=" + array1[tile_number, 13]);
                 
             money_player1 = money_player1 - tile_cost_i;
             money_banker = money_banker + tile_cost_i;
             money_all = money_banker + money_player1 + money_player2;
-            arr2d[tile_number, 13] = "playerX"; //Sami
+            array1[tile_number, 13] = "playerX"; //Sami
 
-            Debug.Log("after owner=" + arr2d[tile_number, 13]);
+            Debug.Log("after owner=" + array1[tile_number, 13]);
             Debug.Log("after purchase");
             Debug.Log("money_banker=" + money_banker);
             Debug.Log("money_player1=" + money_player1);
@@ -192,20 +226,6 @@ public class Game : MonoBehaviour
                 //bool bidder_player2_active = false; 
                 //bool bidder_player3_active = false; 
             } //End of the 3 Loop 
-
-        if (Input.GetKeyDown(KeyCode.K))
-            { //Start of the K Loop  
-                Debug.Log("K1. turns_counter=" + turns_counter);
-                Debug.Log("K2. dice1=" + dice1 + " dice2=" + dice2 + " dice_total=" + dice_total);
-                Debug.Log("K3. doubles=" + doubles + " doubles_counter=" + doubles_counter);
-                Debug.Log("K4a. tile_number=" + tile_number + " tile_name=" + tile_name);
-                Debug.Log("K4b. tile_number=" + tile_number + " tile_cost=" + tile_cost);
-                Debug.Log("K5. jailed=" + jailed);
-                Debug.Log("K6. money_banker=" + money_banker);
-                Debug.Log("K7. money_player1=" + money_player1);
-                Debug.Log("K8. money_player2=" + money_player2);
-                Debug.Log("K/////////////////////");
-            } // End of the K Loop
 
         if (Input.GetKeyDown(KeyCode.Space)) //Start of Space Bar Loop  
             { // START OF GETKEYDOWN LOOP (SPACE BAR)
@@ -260,8 +280,8 @@ public class Game : MonoBehaviour
                 }
 
 
-                tile_name = arr2d[tile_number, 0];
-                tile_cost = arr2d[tile_number, 4]; //added to fix error below. fixed now?
+                tile_name = array1[tile_number, 0];
+                tile_cost = array1[tile_number, 4]; //added to fix error below. fixed now?
 
                 Debug.Log("1. turns_counter=" + turns_counter);
                 Debug.Log("2. dice1=" + dice1 + " dice2=" + dice2 + " dice_total=" + dice_total);
