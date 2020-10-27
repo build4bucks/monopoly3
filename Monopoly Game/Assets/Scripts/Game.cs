@@ -1,10 +1,16 @@
-﻿//###### 2020.10.22 @ 11:00pm ######// 
+﻿//###### 2020.10.26 @ 11:00pm ######// 
 //###### Level 1 - Dad's Desktop @ Home ######// 
 
-using System.Collections;
-using System.Collections.Generic;
+//using System.Collections;
+//using System.Collections.Generic;
+//using System.Diagnostics;
+//using UnityEngine.UI; //???
+//using System.Runtime.InteropServices;
+//using System.Diagnostics;
+
 using UnityEngine;
-using System; //Added by Sami to fix convert command 
+using System; //Added by Sami to fix 'convert' command @ ~ line # 214
+
 
 public class Game : MonoBehaviour
 {
@@ -20,17 +26,17 @@ public class Game : MonoBehaviour
 {"Community Chest A","no_type","no_color","2","0","0","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"Baltic Avenue","street","purple","3","60","30","50","4","20","60","180","320","450","bank","FALSE","FALSE","0","0"},
 {"Income Tax","no_type","no_color","4","0","0","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
-{"Reading RR","railroad","black","5","200","100","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
+{"Reading RR","railroad","black","5","200","100","0","25","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"Oriental Avenue","street","lightblue","6","100","50","50","6","30","90","270","400","550","bank","FALSE","FALSE","0","0"},
 {"Chance A","no_type","no_color","7","0","0","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"Vermont Avenue","street","lightblue","8","100","50","50","6","30","90","270","400","550","bank","FALSE","FALSE","0","0"},
 {"Connecticut Avenue","street","lightblue","9","120","60","50","8","40","100","300","450","600","bank","FALSE","FALSE","0","0"},
 {"Jail","no_type","no_color","10","0","0","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"St. Charles Place","street","violet","11","140","70","100","10","50","150","450","625","750","bank","FALSE","FALSE","0","0"},
-{"Electric Company","utility","white","12","150","75","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
+{"Electric Company","utility","white","12","150","75","0","410","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"States Avenue","street","violet","13","140","70","100","10","50","150","450","625","750","bank","FALSE","FALSE","0","0"},
 {"Virginia Avenue","street","violet","14","160","80","100","12","60","180","500","700","900","bank","FALSE","FALSE","0","0"},
-{"Pennsylvania RR","railroad","black","15","200","100","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
+{"Pennsylvania RR","railroad","black","15","200","100","0","25","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"St. James Place","street","orange","16","180","90","100","14","70","200","550","750","950","bank","FALSE","FALSE","0","0"},
 {"Community Chest B","no_type","no_color","17","0","0","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"Tennessee Avenue","street","orange","18","180","90","100","14","70","200","550","750","950","bank","FALSE","FALSE","0","0"},
@@ -40,17 +46,17 @@ public class Game : MonoBehaviour
 {"Chance B","no_type","no_color","22","0","0","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"Indiana Avenue","street","red","23","220","110","150","18","90","250","700","875","1050","bank","FALSE","FALSE","0","0"},
 {"Illinois Avenue","street","red","24","240","120","150","20","100","300","750","925","1100","bank","FALSE","FALSE","0","0"},
-{"B&O RR","railroad","black","25","200","100","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
+{"B&O RR","railroad","black","25","200","100","0","25","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"Atlantic Avenue","street","yellow","26","260","130","150","22","110","330","800","975","1150","bank","FALSE","FALSE","0","0"},
 {"Ventnor Avenue","street","yellow","27","260","130","150","22","110","330","800","975","1150","bank","FALSE","FALSE","0","0"},
-{"Water Works","utility","white","28","150","75","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
+{"Water Works","utility","white","28","150","75","0","410","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"Marvin Gardens","street","yellow","29","280","140","150","24","120","360","850","1025","1200","bank","FALSE","FALSE","0","0"},
 {"Go To Jail","no_type","no_color","30","0","0","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"Pacific Avenue","street","darkgreen","31","300","150","200","26","130","390","900","1100","1275","bank","FALSE","FALSE","0","0"},
 {"N. Carolina Avenue","street","darkgreen","32","300","150","200","26","130","390","900","1100","1275","bank","FALSE","FALSE","0","0"},
 {"Community Chest C","no_type","no_color","33","0","0","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"Pennsylvania Avenue","street","darkgreen","34","320","160","200","28","150","450","1000","1200","1400","bank","FALSE","FALSE","0","0"},
-{"Short Line RR","railroad","black","35","200","100","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
+{"Short Line RR","railroad","black","35","200","100","0","25","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"Chance C","no_type","no_color","36","0","0","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
 {"Park Place","street","darkblue","37","350","175","200","35","175","500","1100","1300","1500","bank","FALSE","FALSE","0","0"},
 {"Luxury Tax","no_type","no_color","38","0","0","0","0","0","0","0","0","0","bank","FALSE","FALSE","0","0"},
@@ -97,12 +103,55 @@ public class Game : MonoBehaviour
     bool bidder_player2_active = false;
     bool bidder_player3_active = false;
     int cupsInTheSink = 10;
+    string str1;
+    string str2;
+    bool toggle1 = false;
+    bool toggle2 = false;
 
- // Start is called before the first frame update 
+    //string customText;
+    //rect = new Rect(0, 0, 400, 200);
+
+    // Start is called before the first frame update 
     void Start() 
         { 
-            jailed = false; 
+            jailed = false;
         }
+
+    
+    void OnGUI()
+    {
+        
+        GUI.Box(new Rect(300, 200, 200, 90), array1[1,0].ToString());
+        //GUI.Box(new Rect(300, 300, 100, 90), str.ToString());
+
+        //if (Time.time < 10)
+        if (toggle1 == true)
+            { 
+            GUIStyle style = new GUIStyle();
+            style.richText = true;
+            GUILayout.Label("<size=16><color=yellow>" 
+                        + str1 +
+                        "</color></size>", style);
+            }
+
+        if (toggle2 == true)
+        {
+            GUIStyle style = new GUIStyle();
+            style.richText = true;
+            GUILayout.Label("<size=16><color=yellow>"
+                        + str2 +
+                        "</color></size>", style);
+        }
+
+        if (GUI.Button(new Rect(250, 50, 75, 20), "Inventory"))
+        {
+            //Debug.Log("Your inventory opens");
+
+            GUI.Box(new Rect(400, 10, 300, 200), "Inventory");
+
+        }
+
+    }
 
     // Update is called once per frame 
     void Update()
@@ -119,6 +168,7 @@ public class Game : MonoBehaviour
             Debug.Log("K7. money_player1=" + money_player1);
             Debug.Log("K8. money_player2=" + money_player2);
             Debug.Log("K/////////////////////");
+
         } // End of the K Loop
 
         if (Input.GetKeyDown(KeyCode.D))
@@ -133,7 +183,48 @@ public class Game : MonoBehaviour
 
         } //End of the D Loop
 
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.X))
+        { //Start of the X Loop
+            for (int i = 0; i < 11; i++) //(rows) tiles
+            {
+                for (int j = 0; j < 3; j++) //(columns) info on each tile
+                {
+                    str2 = str2 + array2[i, j] + " ";
+                }
+                str2 = str2 + "\n";
+            }
+
+            toggle2 = true;
+
+        } //End of the X Loop
+
+        if (Input.GetKeyDown(KeyCode.C))
+        { //Start of the C Loop
+            for (int i = 0; i < 40; i++) //(rows) tiles
+            {
+                for (int j = 0; j < 18; j++) //(columns) info on each tile
+                {
+                    str1 = str1 + array1[i, j] + " ";
+                }
+                str1 = str1 + "\n";
+            }
+
+            toggle1 = true;
+
+        } //End of the C Loop
+
+        if (Input.GetKeyDown(KeyCode.V))
+        { //Start of the V Loop
+            str1 = "";
+            str2 = "";
+            toggle1 = false;
+            toggle2 = false;
+
+        } //End of the V Loop
+
+       
+
+            if (Input.GetKeyDown(KeyCode.M))
         {  //Start of the M Loop  
             Debug.Log("Press M.............MENU");
             Debug.Log("Press SPACE.........ROLL DICE");
