@@ -1,5 +1,6 @@
-﻿//###### 2020.10.26 @ 11:00pm ######// 
-//###### Level 1 - Dad's Desktop @ Home ######// 
+﻿//### 2020.11.02 @2:15pm ###//
+//### Level 1 - Dad's Desktop @ Office ###//
+//### updated array notes, fixed {} alignments on multiple loops ###//
 
 //using System.Collections;
 //using System.Collections.Generic;
@@ -16,8 +17,7 @@ public class Game : MonoBehaviour
 {
 
     //create database
-    string[,] array1 = new string[40, 18]
-
+    string[,] array1 = new string[40, 18] //array of Monopoly data from the original version of the game
     {
 
 //0name1type2color3tile4cost5mortgage6house_price7rent_08rent_19rent_210rent_311rent_412rent_hotel13owner14monopoly15mortgaged16houses17hotels
@@ -65,7 +65,7 @@ public class Game : MonoBehaviour
 
     };
 
-    string[,] array2 = new string[,]
+    string[,] array2 = new string[,]  //array of "monopolies" (ownership of all properties in a particular group)
     {
         {"m1","FALSE1","bank1"},
         {"m2","FALSE2","bank2"},
@@ -98,8 +98,8 @@ public class Game : MonoBehaviour
     int money_banker = 9000;
     int money_all = 12000;
     int auction_money;
-    bool auction_active = false; //if the auction is still going  
-    bool bidder_player1_active = false; 
+    bool auction_active = false; //if the auction is still going
+    bool bidder_player1_active = false;
     bool bidder_player2_active = false;
     bool bidder_player3_active = false;
     int cupsInTheSink = 10;
@@ -113,11 +113,10 @@ public class Game : MonoBehaviour
 
     // Start is called before the first frame update 
     void Start() 
-        { 
-            jailed = false;
-        }
+    { 
+        jailed = false;
+    }
 
-    
     void OnGUI()
     {
         
@@ -126,13 +125,13 @@ public class Game : MonoBehaviour
 
         //if (Time.time < 10)
         if (toggle1 == true)
-            { 
+        { 
             GUIStyle style = new GUIStyle();
             style.richText = true;
             GUILayout.Label("<size=16><color=yellow>" 
                         + str1 +
                         "</color></size>", style);
-            }
+        }
 
         if (toggle2 == true)
         {
@@ -146,9 +145,7 @@ public class Game : MonoBehaviour
         if (GUI.Button(new Rect(250, 50, 75, 20), "Inventory"))
         {
             //Debug.Log("Your inventory opens");
-
             GUI.Box(new Rect(400, 10, 300, 200), "Inventory");
-
         }
 
     }
@@ -224,7 +221,7 @@ public class Game : MonoBehaviour
 
        
 
-            if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M))
         {  //Start of the M Loop  
             Debug.Log("Press M.............MENU");
             Debug.Log("Press SPACE.........ROLL DICE");
@@ -316,73 +313,73 @@ public class Game : MonoBehaviour
                 //bool bidder_player1_active = false; 
                 //bool bidder_player2_active = false; 
                 //bool bidder_player3_active = false; 
-            } //End of the 3 Loop 
+        } //End of the 3 Loop 
 
         if (Input.GetKeyDown(KeyCode.Space)) //Start of Space Bar Loop  
-            { // START OF GETKEYDOWN LOOP (SPACE BAR)
+        { // START OF GETKEYDOWN LOOP (SPACE BAR)
         
-                cupsInTheSink = cupsInTheSink + 10;
-                doubles = false;
-                turns_counter = turns_counter + 1;
-                dice1 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
-                dice2 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
-                dice_total = dice1 + dice2;
+            cupsInTheSink = cupsInTheSink + 10;
+            doubles = false;
+            turns_counter = turns_counter + 1;
+            dice1 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
+            dice2 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
+            dice_total = dice1 + dice2;
         
             //if ( tile_number == 10 && jailed == true) //JK 
             if (jailed == false) //JK 
-                { //JK 
-                    tile_number = tile_number + dice_total;
-                } //JK 
+            { //JK 
+                tile_number = tile_number + dice_total;
+            } //JK 
 
             if (dice1 == dice2) //check for doubles 
-                {
-                    doubles = true;
-                    jailed = false; //JK 
-                    //Debug.Log("DOUBLES!"); 
-                    doubles_counter = doubles_counter + 1;  
-                    //Debug.Log("doubles_counter=" + doubles_counter); 
+            {
+                doubles = true;
+                jailed = false; //JK 
+                //Debug.Log("DOUBLES!"); 
+                doubles_counter = doubles_counter + 1;  
+                //Debug.Log("doubles_counter=" + doubles_counter); 
 
-                    if (doubles_counter == 3) //GO TO JAIL     
-                        { 
-                            Debug.Log("GO TO JAIL!");
-                            jailed = false;
-                            //JK (leave at false for now)
-                            //until we have a way to get out of jail
-                            //for now jailed is always false, until we allow for jail releases
-                            //via doubles, $50 fine or Get Out Of Jail Free card
-                            doubles_counter = 0;
-                            tile_number = 10;
-                        }   
-                } 
-
-            if (tile_number == 30) //GO TO JAIL (this checks AFTER doubles check) 
-                {
-                    tile_number = 10;
-                    jailed = false; 
+                if (doubles_counter == 3) //GO TO JAIL     
+                { 
+                    Debug.Log("GO TO JAIL!");
+                    jailed = false;
                     //JK (leave at false for now)
                     //until we have a way to get out of jail
                     //for now jailed is always false, until we allow for jail releases
                     //via doubles, $50 fine or Get Out Of Jail Free card
-                }
+                    doubles_counter = 0;
+                    tile_number = 10;
+                }   
+            } 
+
+            if (tile_number == 30) //GO TO JAIL (this checks AFTER doubles check) 
+            {
+                tile_number = 10;
+                jailed = false; 
+                //JK (leave at false for now)
+                //until we have a way to get out of jail
+                //for now jailed is always false, until we allow for jail releases
+                //via doubles, $50 fine or Get Out Of Jail Free card
+            }
 
             if (tile_number > 39) //check for Pass Go  
-                { 
-                   tile_number = tile_number - 40; 
-                }
+            { 
+                tile_number = tile_number - 40; 
+            }
 
 
-                tile_name = array1[tile_number, 0];
-                tile_cost = array1[tile_number, 4]; //added to fix error below. fixed now?
+            tile_name = array1[tile_number, 0];
+            tile_cost = array1[tile_number, 4]; //added to fix error below. fixed now?
 
-                Debug.Log("1. turns_counter=" + turns_counter);
-                Debug.Log("2. dice1=" + dice1 + " dice2=" + dice2 + " dice_total=" + dice_total);
-                Debug.Log("3. doubles=" + doubles + " doubles_counter=" + doubles_counter);
-                Debug.Log("4a. tile_number=" + tile_number + " tile_name=" + tile_name);
-                Debug.Log("4b. tile_number=" + tile_number + " tile_cost=" + tile_cost); //error?
-                Debug.Log("5. jailed=" + jailed);
+            Debug.Log("1. turns_counter=" + turns_counter);
+            Debug.Log("2. dice1=" + dice1 + " dice2=" + dice2 + " dice_total=" + dice_total);
+            Debug.Log("3. doubles=" + doubles + " doubles_counter=" + doubles_counter);
+            Debug.Log("4a. tile_number=" + tile_number + " tile_name=" + tile_name);
+            Debug.Log("4b. tile_number=" + tile_number + " tile_cost=" + tile_cost); //error?
+            Debug.Log("5. jailed=" + jailed);
 
-                Debug.Log("/////////////////////");  
-            } //End of the Space Bar Loop
+            Debug.Log("/////////////////////");  
+        } //End of the Space Bar Loop
     } 
 }
 
