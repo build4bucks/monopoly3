@@ -66,18 +66,19 @@ public class Game : MonoBehaviour
     };
 
     string[,] array2 = new string[,]  //array of "monopolies" (ownership of all properties in a particular group)
+    //Railroads are last because they have "mini-monopolies"
     {
-        {"m1","FALSE1","bank1"},
-        {"m2","FALSE2","bank2"},
-        {"m3","FALSE","bank"},
-        {"m4","FALSE","bank"},
-        {"m5","FALSE","bank"},
-        {"m6","FALSE","bank"},
-        {"m7","FALSE","bank"},
-        {"m8","FALSE","bank"},
-        {"m9","FALSE","bank"},
-        {"m10","FALSE","bank"},
-        {"m11","FALSE","bank"}
+        {"m1","FALSE1","bank1"}, //DARK PURPLE
+        {"m2","FALSE2","bank2"}, //LIGHT BLUE
+        {"m3","FALSE","bank"}, //LIGHT PURPLE
+        {"m4","FALSE","bank"}, //ORANGE
+        {"m5","FALSE","bank"}, //RED
+        {"m6","FALSE","bank"}, //YELLOW
+        {"m7","FALSE","bank"}, //GREEN
+        {"m8","FALSE","bank"}, //DARK BLUE
+        {"m9","FALSE","bank"}, //UTILITIES
+        {"m10","FALSE","bank"}, //RAILROADS1
+        {"m11","FALSE","bank"} //RAILROADS2
     };
 
     //create more database 
@@ -153,6 +154,244 @@ public class Game : MonoBehaviour
     // Update is called once per frame 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        { //Start of the P Loop
+
+            Check4monopolies();
+
+        } //End of the P Loop
+
+        void BuyLand()
+        {
+            tile_name = array1[tile_number, 0];
+            tile_cost = array1[tile_number, 4];
+            Debug.Log("tile_name=" + tile_name);
+            Debug.Log("tile_cost=" + tile_cost);
+            tile_cost_i = Convert.ToInt16(tile_cost);
+            Debug.Log("before purchase");
+            Debug.Log("money_banker=" + money_banker);
+            Debug.Log("money_player1=" + money_player1);
+            Debug.Log("money_player2=" + money_player2);
+            Debug.Log("money_all=" + money_all);
+            Debug.Log("before owner=" + array1[tile_number, 13]);
+
+            money_player1 = money_player1 - tile_cost_i;
+            money_banker = money_banker + tile_cost_i;
+            money_all = money_banker + money_player1 + money_player2;
+            array1[tile_number, 13] = "playerX"; //Sami
+
+            Debug.Log("after owner=" + array1[tile_number, 13]);
+            Debug.Log("after purchase");
+            Debug.Log("money_banker=" + money_banker);
+            Debug.Log("money_player1=" + money_player1);
+            Debug.Log("money_player2=" + money_player2);
+            Debug.Log("money_all=" + money_all);
+        }
+
+        void Check4monopolies()
+        {
+            int monopolies_counter = 0;
+
+            //START OF CHECKING FOR monopoly1
+            string monopolies1_owner = "";
+            Debug.Log("CHECKING FOR DARK PURPLE monopolies...");
+            if ((array1[1, 13] == array1[3, 13])
+                && (array1[1, 13] != "bank5"))
+            {
+                array2[0, 1] = "True"; //Always x,1
+                monopolies1_owner = array1[6, 13];
+                array2[0, 2] = monopolies1_owner; //Always x,2
+                Debug.Log("You have a DARK PURPLE monopoly!");
+                monopolies_counter = monopolies_counter + 1;
+            }
+            else
+            {
+                Debug.Log("You DO NOT have a DARK PURPLE monopoly!");
+            }
+            //END OF CHECKING FOR monopoly1
+
+            //START OF CHECKING FOR monopoly2
+            string monopolies2_owner = "";
+            Debug.Log("CHECKING FOR LIGHT BLUE monopolies...");
+            if ((array1[6, 13] == array1[8, 13])
+                && (array1[8, 13] == array1[9, 13])
+                && (array1[6, 13] != "bank5"))
+            {
+                array2[1, 1] = "True"; //Always x,1
+                monopolies2_owner = array1[6, 13];
+                array2[1, 2] = monopolies2_owner; //Always x,2
+                Debug.Log("You have a LIGHT BLUE monopoly!");
+                monopolies_counter = monopolies_counter + 1;
+            }
+            else
+            {
+                Debug.Log("You DO NOT have a LIGHT BLUE monopoly!");
+            }
+            //END OF CHECKING FOR monopoly2
+
+            //START OF CHECKING FOR monopoly3
+            string monopolies3_owner = "";
+            Debug.Log("CHECKING FOR LIGHT PURPLE monopolies...");
+            if ((array1[11, 13] == array1[13, 13])
+                && (array1[13, 13] == array1[14, 13])
+                && (array1[11, 13] != "bank5"))
+            {
+                array2[2, 1] = "True"; //Always x,1
+                monopolies3_owner = array1[11, 13];
+                array2[2, 2] = monopolies3_owner; //Always x,2
+                Debug.Log("You have a LIGHT PURPLE monopoly!");
+                monopolies_counter = monopolies_counter + 1;
+            }
+            else
+            {
+                Debug.Log("You DO NOT have a LIGHT PURPLE monopoly!");
+            }
+            //END OF CHECKING FOR monopoly3
+
+            //START OF CHECKING FOR monopoly4
+            string monopolies4_owner = "";
+            Debug.Log("CHECKING FOR ORANGE monopolies...");
+            if ((array1[13, 13] == array1[15, 13])
+                && (array1[15, 13] == array1[16, 13])
+                && (array1[13, 13] != "bank5"))
+            {
+                array2[3, 1] = "True"; //Always x,1
+                monopolies4_owner = array1[13, 13];
+                array2[3, 2] = monopolies4_owner; //Always x,2
+                Debug.Log("You have a ORANGE monopoly!");
+                monopolies_counter = monopolies_counter + 1;
+            }
+            else
+            {
+                Debug.Log("You DO NOT have a ORANGE monopoly!");
+            }
+            //END OF CHECKING FOR monopoly4
+
+            //START OF CHECKING FOR monopoly5
+            string monopolies5_owner = "";
+            Debug.Log("CHECKING FOR RED monopolies...");
+            if ((array1[21, 13] == array1[23, 13])
+                && (array1[23, 13] == array1[24, 13])
+                && (array1[21, 13] != "bank5"))
+            {
+                array2[4, 1] = "True"; //Always x,1
+                monopolies5_owner = array1[21, 13];
+                array2[4, 2] = monopolies5_owner; //Always x,2
+                Debug.Log("You have a RED monopoly!");
+                monopolies_counter = monopolies_counter + 1;
+            }
+            else
+            {
+                Debug.Log("You DO NOT have a RED monopoly!");
+            }
+            //END OF CHECKING FOR monopoly5
+
+            //START OF CHECKING FOR monopoly6
+            string monopolies6_owner = "";
+            Debug.Log("CHECKING FOR YELLOW monopolies...");
+            if ((array1[26, 13] == array1[27, 13])
+                && (array1[27, 13] == array1[29, 13])
+                && (array1[26, 13] != "bank5"))
+            {
+                array2[5, 1] = "True"; //Always x,1
+                monopolies6_owner = array1[26, 13];
+                array2[5, 2] = monopolies6_owner; //Always x,2
+                Debug.Log("You have a YELLOW monopoly!");
+                monopolies_counter = monopolies_counter + 1;
+            }
+            else
+            {
+                Debug.Log("You DO NOT have a YELLOW monopoly!");
+            }
+            //END OF CHECKING FOR monopoly6
+
+            //START OF CHECKING FOR monopoly7
+            string monopolies7_owner = "";
+            Debug.Log("CHECKING FOR GREEN monopolies...");
+            if ((array1[31, 13] == array1[32, 13])
+                && (array1[32, 13] == array1[34, 13])
+                && (array1[31, 13] != "bank5"))
+            {
+                array2[6, 1] = "True"; //Always x,1
+                monopolies7_owner = array1[31, 13];
+                array2[6, 2] = monopolies7_owner; //Always x,2
+                Debug.Log("You have a GREEN monopoly!");
+                monopolies_counter = monopolies_counter + 1;
+            }
+            else
+            {
+                Debug.Log("You DO NOT have a GREEN monopoly!");
+            }
+            //END OF CHECKING FOR monopoly7
+
+            //START OF CHECKING FOR monopoly8
+            string monopolies8_owner = "";
+            Debug.Log("CHECKING FOR DARK BLUE monopolies...");
+            if ((array1[37, 13] == array1[39, 13])
+                && (array1[37, 13] != "bank5"))
+            {
+                array2[7, 1] = "True"; //Always x,1
+                monopolies8_owner = array1[37, 13];
+                array2[7, 2] = monopolies8_owner; //Always x,2
+                Debug.Log("You have a DARK BLUE monopoly!");
+                monopolies_counter = monopolies_counter + 1;
+            }
+            else
+            {
+                Debug.Log("You DO NOT have a DARK BLUE monopoly!");
+            }
+            //END OF CHECKING FOR monopoly8
+
+            //START OF CHECKING FOR monopoly9
+            string monopolies9_owner = "";
+            Debug.Log("CHECKING FOR UTILITIES monopolies...");
+            if ((array1[12, 13] == array1[28, 13])
+                && (array1[12, 13] != "bank5"))
+            {
+                array2[8, 1] = "True"; //Always x,1
+                monopolies9_owner = array1[37, 13];
+                array2[8, 2] = monopolies9_owner; //Always x,2
+                Debug.Log("You have a UTILITIES monopoly!");
+                monopolies_counter = monopolies_counter + 1;
+            }
+            else
+            {
+                Debug.Log("You DO NOT have a UTILITIES monopoly!");
+            }
+            //END OF CHECKING FOR monopoly9
+
+            //START OF CHECKING FOR monopoly10
+            string monopolies10_owner = "";
+            Debug.Log("CHECKING FOR RAILROADS monopolies...");
+            if ((array1[5, 13] == array1[15, 13])
+                && (array1[15, 13] == array1[25, 13])
+                && (array1[25, 13] == array1[35, 13])
+                && (array1[5, 13] != "bank5"))
+            {
+                array2[9, 1] = "True"; //Always x,1
+                monopolies10_owner = array1[37, 13];
+                array2[9, 2] = monopolies10_owner; //Always x,2
+                Debug.Log("You have a RAILROADS monopoly!");
+                monopolies_counter = monopolies_counter + 1;
+            }
+            else
+            {
+                Debug.Log("You DO NOT have a RAILROADS monopoly!");
+            }
+            //END OF CHECKING FOR monopoly8
+
+            Debug.Log("monopolies_counter = " + monopolies_counter);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        { //Start of the B Loop
+
+            BuyLand();
+            Check4monopolies();
+
+            //tile_data2 = Convert.ToInt32("100"); 
+        } //End of the B Loop
+
         if (Input.GetKeyDown(KeyCode.K))
         { //Start of the K Loop  
             Debug.Log("K1. turns_counter=" + turns_counter);
@@ -219,8 +458,6 @@ public class Game : MonoBehaviour
 
         } //End of the V Loop
 
-       
-
         if (Input.GetKeyDown(KeyCode.M))
         {  //Start of the M Loop  
             Debug.Log("Press M.............MENU");
@@ -233,8 +470,8 @@ public class Game : MonoBehaviour
             Debug.Log("Press 5.............UN-MORTGAGE LAND");
             Debug.Log("Press D.............VIEW ALL LAND OWNERSHIP");
             Debug.Log("Press K.............SHOW GAME STATUS, MONEY, ETC.");
+            Debug.Log("Press P.............CHECK/SHOW monopolies");
         } //End of the M Loop 
-
 
         if (Input.GetKeyDown(KeyCode.T))
         {  //Start of the T Loop
@@ -267,34 +504,7 @@ public class Game : MonoBehaviour
 
         //if (Input.GetKeyDown(KeyCode.Keypad1)) //stopped working in Unity 2020, Why?
         // The Start of the 1 Loop
-        if (Input.GetKeyDown(KeyCode.B))
-        { //Start of the B Loop
-
-            tile_name = array1[tile_number, 0];
-            tile_cost = array1[tile_number, 4];
-            Debug.Log("tile_name=" + tile_name);
-            Debug.Log("tile_cost=" + tile_cost);
-            tile_cost_i = Convert.ToInt16(tile_cost);
-            Debug.Log("before purchase");
-            Debug.Log("money_banker=" + money_banker);
-            Debug.Log("money_player1=" + money_player1);
-            Debug.Log("money_player2=" + money_player2);
-            Debug.Log("money_all=" + money_all);
-            Debug.Log("before owner=" + array1[tile_number, 13]);
-                
-            money_player1 = money_player1 - tile_cost_i;
-            money_banker = money_banker + tile_cost_i;
-            money_all = money_banker + money_player1 + money_player2;
-            array1[tile_number, 13] = "playerX"; //Sami
-
-            Debug.Log("after owner=" + array1[tile_number, 13]);
-            Debug.Log("after purchase");
-            Debug.Log("money_banker=" + money_banker);
-            Debug.Log("money_player1=" + money_player1);
-            Debug.Log("money_player2=" + money_player2);
-            Debug.Log("money_all=" + money_all);
-            //tile_data2 = Convert.ToInt32("100"); 
-        } //End of the B Loop 
+         
 
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {  //Start of the 3 Loop 
