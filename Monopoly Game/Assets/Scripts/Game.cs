@@ -113,23 +113,23 @@ public class Game : MonoBehaviour
     //rect = new Rect(0, 0, 400, 200);
 
     // Start is called before the first frame update 
-    void Start() 
-    { 
+    void Start()
+    {
         jailed = false;
     }
 
     void OnGUI()
     {
-        
-        GUI.Box(new Rect(300, 200, 200, 90), array1[1,0].ToString());
+
+        GUI.Box(new Rect(300, 200, 200, 90), array1[1, 0].ToString());
         //GUI.Box(new Rect(300, 300, 100, 90), str.ToString());
 
         //if (Time.time < 10)
         if (toggle1 == true)
-        { 
+        {
             GUIStyle style = new GUIStyle();
             style.richText = true;
-            GUILayout.Label("<size=16><color=yellow>" 
+            GUILayout.Label("<size=16><color=yellow>"
                         + str1 +
                         "</color></size>", style);
         }
@@ -468,7 +468,7 @@ public class Game : MonoBehaviour
             Debug.Log("Press T.............TRADE / MODIFIES DB");
             Debug.Log("Press 4.............MORTGAGE LAND");
             Debug.Log("Press 5.............UN-MORTGAGE LAND");
-            Debug.Log("Press D.............VIEW ALL LAND OWNERSHIP");
+            Debug.Log("Press D.............VIEW AL nmbvhL LAND OWNERSHIP");
             Debug.Log("Press K.............SHOW GAME STATUS, MONEY, ETC.");
             Debug.Log("Press P.............CHECK/SHOW monopolies");
         } //End of the M Loop 
@@ -504,37 +504,37 @@ public class Game : MonoBehaviour
 
         //if (Input.GetKeyDown(KeyCode.Keypad1)) //stopped working in Unity 2020, Why?
         // The Start of the 1 Loop
-         
+
 
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {  //Start of the 3 Loop 
             auction_active = true;
-                bidder_player1_active = true;
-                bidder_player2_active = true;
-                bidder_player3_active = true;
+            bidder_player1_active = true;
+            bidder_player2_active = true;
+            bidder_player3_active = true;
 
-                {
-                    Debug.Log("I've washed a cup! current cupsInTheSink: " + cupsInTheSink);
-                    cupsInTheSink--;
-                }
+            {
+                Debug.Log("I've washed a cup! current cupsInTheSink: " + cupsInTheSink);
+                cupsInTheSink--;
+            }
 
-                //int auction_money; 
-                //bool auction_active = false; //if the auction is still going 
-                //bool bidder_player1_active = false; 
-                //bool bidder_player2_active = false; 
-                //bool bidder_player3_active = false; 
+            //int auction_money; 
+            //bool auction_active = false; //if the auction is still going 
+            //bool bidder_player1_active = false; 
+            //bool bidder_player2_active = false; 
+            //bool bidder_player3_active = false; 
         } //End of the 3 Loop 
 
         if (Input.GetKeyDown(KeyCode.Space)) //Start of Space Bar Loop  
         { // START OF GETKEYDOWN LOOP (SPACE BAR)
-        
+
             cupsInTheSink = cupsInTheSink + 10;
             doubles = false;
             turns_counter = turns_counter + 1;
             dice1 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
             dice2 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
             dice_total = dice1 + dice2;
-        
+
             //if ( tile_number == 10 && jailed == true) //JK 
             if (jailed == false) //JK 
             { //JK 
@@ -546,11 +546,11 @@ public class Game : MonoBehaviour
                 doubles = true;
                 jailed = false; //JK 
                 //Debug.Log("DOUBLES!"); 
-                doubles_counter = doubles_counter + 1;  
+                doubles_counter = doubles_counter + 1;
                 //Debug.Log("doubles_counter=" + doubles_counter); 
 
                 if (doubles_counter == 3) //GO TO JAIL     
-                { 
+                {
                     Debug.Log("GO TO JAIL!");
                     jailed = false;
                     //JK (leave at false for now)
@@ -559,13 +559,13 @@ public class Game : MonoBehaviour
                     //via doubles, $50 fine or Get Out Of Jail Free card
                     doubles_counter = 0;
                     tile_number = 10;
-                }   
-            } 
+                }
+            }
 
             if (tile_number == 30) //GO TO JAIL (this checks AFTER doubles check) 
             {
                 tile_number = 10;
-                jailed = false; 
+                jailed = false;
                 //JK (leave at false for now)
                 //until we have a way to get out of jail
                 //for now jailed is always false, until we allow for jail releases
@@ -573,8 +573,8 @@ public class Game : MonoBehaviour
             }
 
             if (tile_number > 39) //check for Pass Go  
-            { 
-                tile_number = tile_number - 40; 
+            {
+                tile_number = tile_number - 40;
             }
 
 
@@ -588,8 +588,8 @@ public class Game : MonoBehaviour
             Debug.Log("4b. tile_number=" + tile_number + " tile_cost=" + tile_cost); //error?
             Debug.Log("5. jailed=" + jailed);
 
-            Debug.Log("/////////////////////");  
+            Debug.Log("/////////////////////");
         } //End of the Space Bar Loop
-    } 
+    }
 }
 
