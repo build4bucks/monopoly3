@@ -120,27 +120,27 @@ public class SLN : MonoBehaviour
         { "Winner!","Done","Red","0"},
     };
 
-          int dice1; //result of dice1 roll 
-    //    int dice2; //result of dice2 roll
-          int turns_counter;
+    int dice1; //result of dice1 roll 
+               //    int dice2; //result of dice2 roll
+    int turns_counter;
 
-        void Start() 
-        { 
-    
-        }
+    void Start()
+    {
+
+    }
 
 
     // Update is called once per frame 
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space)) //Start of Space Bar Loop  
-            { // START OF GETKEYDOWN LOOP (SPACE BAR)
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) //Start of Space Bar Loop  
+        { // START OF GETKEYDOWN LOOP (SPACE BAR)
 
-    //            
-    //            
-                turns_counter = turns_counter + 1;
-                dice1 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
-                                                        //            dice2 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
+            //            
+            //            
+            turns_counter = turns_counter + 1;
+            dice1 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
+                                                    //            dice2 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
 
             //            if (player = 2) //Teleport
             //            {
@@ -167,4 +167,5 @@ public class SLN : MonoBehaviour
             //        } //End of the Space Bar Loop
         }
     }
+}
 

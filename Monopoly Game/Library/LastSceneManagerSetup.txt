@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Monopoly.unity
+- path: Assets/Scenes/SNLv1-Jack.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
