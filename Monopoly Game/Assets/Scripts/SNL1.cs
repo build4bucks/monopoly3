@@ -1,4 +1,6 @@
-﻿//using System.Collections;
+﻿//2020.11.27 @ 1:45 AM with MOM!!!!!!!!!!!!!!!!!!!!!!
+
+//using System.Collections;
 //using System.Collections.Generic;
 //using System.Diagnostics;
 //using UnityEngine.UI; //???
@@ -186,9 +188,9 @@ namespace SNL
 
             void RollDice()
             {
-                Debug.Log("SNL1: SNL2.thePlayers = " + SNL2.thePlayers);
+                Debug.Log("SNL1: SNL_GUI_INPUT.thePlayers = " + SNL_GUI_INPUT.thePlayers); // fix with sript renamed
 
-                turns_counter = turns_counter + 1;
+                turns_counter = turns_counter + 1; //not used
                 dice1 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
 
 
