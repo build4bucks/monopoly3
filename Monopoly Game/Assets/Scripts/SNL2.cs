@@ -15,6 +15,7 @@ namespace SNL
         {
             thePlayers = inputField.GetComponent<Text>().text;
             textDisplay.GetComponent<Text>().text = thePlayers + " Players";
+            Debug.Log("SNL2: thePlayers = " + thePlayers);
         }
 
     }

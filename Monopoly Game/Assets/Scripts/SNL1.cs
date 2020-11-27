@@ -5,6 +5,7 @@
 //using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
+using System; //Added by Sami to fix 'convert' command @ ~ line # 214
 
 namespace SNL
 {
@@ -124,10 +125,10 @@ namespace SNL
         //create database
         string[,] array2 = new string[4, 4] //array of Monopoly data from the original version of the game
         {
-        { "0","0","0","0"},
-        { "0","0","0","0"},
-        { "0","0","0","0"},
-        { "0","0","0","0"}
+        { "0","0","0","0"},     //not used
+        { "1","1","0","0"},     //player # //tile #
+        { "2","1","0","0"},     //player # //tile #
+        { "0","0","0","0"}      //not used
         };
 
 
@@ -135,20 +136,41 @@ namespace SNL
         int turns_counter = 0;
         int player = 1;
         int tile = 1;
-        string turn;
+        //string turn;
         //string thePlayers2;
+        string str1;
+        string str2;
+        bool toggle1 = false;
+        bool toggle2 = false;
+        int players = 2;
+        int turn = 1;
 
-        void Start()
+        void OnGUI()
         {
-            Debug.Log("How many players???");
 
-            //public Text Username_field;
-            //then drag and drop the Username_field
+            //GUI.Box(new Rect(300, 200, 200, 90), array1[1, 0].ToString());
+            //GUI.Box(new Rect(300, 300, 100, 90), str.ToString());
 
-            //string userID = Username_field.text.ToString();
+            //if (Time.time < 10)
+            if (toggle1 == true)
+            {
+                GUIStyle style = new GUIStyle();
+                style.richText = true;
+                GUILayout.Label("<size=16><color=yellow>"
+                            + str1 +
+                            "</color></size>", style);
+            }
+
+            if (toggle2 == true)
+            {
+                GUIStyle style = new GUIStyle();
+                style.richText = true;
+                GUILayout.Label("<size=16><color=yellow>"
+                            + str2 +
+                            "</color></size>", style);
+            }
 
         }
-
 
         // Update is called once per frame 
         void Update()
@@ -162,11 +184,22 @@ namespace SNL
             //turn = SNL2.thePlayers; //works
             //Debug.Log("thePlayers = " + SNL2.thePlayers);// Works needs back
 
-            if (Input.GetKeyDown(KeyCode.Space)) //Start of Space Bar Loop  
-            { // START OF GETKEYDOWN LOOP (SPACE BAR)
+            void RollDice()
+            {
+                Debug.Log("SNL1: SNL2.thePlayers = " + SNL2.thePlayers);
 
                 turns_counter = turns_counter + 1;
-                dice1 = Random.Range(1, 7); // 1,7 for 6 sided dice
+                dice1 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
+
+
+                //string tile_str;
+                //tile_str = array2[turn, 1];
+                //tile = array2[turn, 1].ToString();
+                //tile = array2[turn, 1].ToInt();
+                //tile_cost_i = Convert.ToInt16(tile_cost);
+                //int players = 2;
+                //int turn = 1;
+                tile = Convert.ToInt16(array2[turn, 1]);
 
                 tile = tile + dice1;
 
@@ -249,18 +282,71 @@ namespace SNL
                 }
 
                 Debug.Log("You Rolled = " + dice1);
-                Debug.Log("Your on tile = " + tile);
+                Debug.Log("You're on tile = " + tile);
 
                 //if (tile_number > 39) //check for Pass Go  
                 //{ 
                 //    tile_number = tile_number - 40; 
                 //}
 
+                turn = turn + 1;
+                if (turn == 3)
+                {
+                    turn = 1;
+                }
 
-                //            tile_name = array1[tile_number, 0];
-                //            tile_cost = array1[tile_number, 4]; //added to fix error below. fixed now?
+            }
 
-            } //End of the Space Bar Loop
+            if (Input.GetKeyDown(KeyCode.A)) //Start of A Loop  
+            { // START OF GETKEYDOWN LOOP (A)
+
+                //tile = Convert.ToInt16(array2[turn, 1]); //this should be moved here
+                Debug.Log("BEFORE array2[1,1] = " + array2[1, 1]);
+                RollDice();
+                array2[1, 1] = tile.ToString(); //add string data
+                //array2[1, 1] = "A"; //add string data
+                Debug.Log("Player --A-- Rolled the Dice");
+                Debug.Log("AFTER array2[1,1] = " + array2[1, 1]);
+
+            } //End of the A Loop
+
+            if (Input.GetKeyDown(KeyCode.L)) //Start of L Loop  
+            { // START OF GETKEYDOWN LOOP (L)
+
+                //tile = Convert.ToInt16(array2[turn, 1]); //this should be moved here
+                Debug.Log("BEFORE array2[2,1] = " + array2[2,1]);
+                RollDice();
+                array2[2, 1] = tile.ToString(); //add string data
+                //array2[2, 1] = tile.ToString(); //add string data
+                //array2[2, 1] = "L"; //add string data
+                Debug.Log("Player --L-- Rolled the Dice");
+                Debug.Log("AFTER array2[2,1] = " + array2[2, 1]);
+
+            } //End of the L Loop
+
+            if (Input.GetKeyDown(KeyCode.X))
+            { //Start of the X Loop
+                for (int i = 0; i < 4; i++) //(rows) tiles
+                {
+                    for (int j = 0; j < 4; j++) //(columns) info on each tile
+                    {
+                        str2 = str2 + array2[i, j] + " ";
+                    }
+                    str2 = str2 + "\n";
+                }
+
+                toggle2 = true;
+
+            } //End of the X Loop
+
+            if (Input.GetKeyDown(KeyCode.V))
+            { //Start of the V Loop
+                str1 = "";
+                str2 = "";
+                toggle1 = false;
+                toggle2 = false;
+
+            } //End of the V Loop
 
         }
     }
