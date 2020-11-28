@@ -203,7 +203,7 @@ namespace SNL
                 //tile_cost_i = Convert.ToInt16(tile_cost);
                 //int players = 2;
                 //int turn = 1;
-                tile = Convert.ToInt16(array2[turn, 1]);
+                tile = Convert.ToInt16(array2[turn, 1]); //tells us where is player now!
 
                 tile = tile + dice1;
 

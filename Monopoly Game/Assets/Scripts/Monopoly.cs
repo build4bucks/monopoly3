@@ -12,7 +12,6 @@
 using UnityEngine;
 using System; //Added by Sami to fix 'convert' command @ ~ line # 214
 
-
 public class Monopoly : MonoBehaviour
 {
 
@@ -81,6 +80,15 @@ public class Monopoly : MonoBehaviour
         {"m11","FALSE","bank"} //RAILROADS2
     };
 
+    //create database
+    string[,] array3 = new string[4, 4] //array of Monopoly data from the original version of the game
+    {
+        { "1","0","0","0"},     //not used
+        { "2","0","0","0"},     //player # //tile #
+        { "3","0","0","0"},     //player # //tile #
+        { "4","0","0","0"}      //not used
+    };
+
     //create more database 
     int turns_counter; //how many turns played so far by current player 
     int dice1; //result of dice1 roll 
@@ -106,8 +114,11 @@ public class Monopoly : MonoBehaviour
     int cupsInTheSink = 10;
     string str1;
     string str2;
+    string str3;
     bool toggle1 = false;
     bool toggle2 = false;
+    bool toggle3 = false;
+    int turn = 1;
 
     //string customText;
     //rect = new Rect(0, 0, 400, 200);
@@ -140,6 +151,15 @@ public class Monopoly : MonoBehaviour
             style.richText = true;
             GUILayout.Label("<size=16><color=yellow>"
                         + str2 +
+                        "</color></size>", style);
+        }
+
+        if (toggle3 == true)
+        {
+            GUIStyle style = new GUIStyle();
+            style.richText = true;
+            GUILayout.Label("<size=16><color=yellow>"
+                        + str3 +
                         "</color></size>", style);
         }
 
@@ -419,6 +439,39 @@ public class Monopoly : MonoBehaviour
 
         } //End of the D Loop
 
+
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        { //Start of the Z Loop
+            for (int i = 0; i < 4; i++) //(rows) tiles
+            {
+                for (int j = 0; j < 4; j++) //(columns) info on each tile
+                {
+                    str3 = str3 + array3[i, j] + " ";
+                }
+                str3 = str3 + "\n";
+            }
+
+            toggle3 = true;
+
+        } //End of the Z Loop
+
+        void ShowArray3()
+        //if (Input.GetKeyDown(KeyCode.Z))
+        { //Start of the Z Loop
+            for (int i = 0; i < 4; i++) //(rows) tiles
+            {
+                for (int j = 0; j < 4; j++) //(columns) info on each tile
+                {
+                    str3 = str3 + array3[i, j] + " ";
+                }
+                str3 = str3 + "\n";
+            }
+
+            toggle3 = true;
+
+        } //End of the Z Loop
+
         if (Input.GetKeyDown(KeyCode.X))
         { //Start of the X Loop
             for (int i = 0; i < 11; i++) //(rows) tiles
@@ -449,12 +502,26 @@ public class Monopoly : MonoBehaviour
 
         } //End of the C Loop
 
+        void ClearScreenGUI()  //clear GUI
+        //if (Input.GetKeyDown(KeyCode.V))
+        { //Start of the V Loop
+            str1 = "";
+            str2 = "";
+            str3 = "";
+            toggle1 = false;
+            toggle2 = false;
+            toggle3 = false;
+
+        } //End of the V Loop
+
         if (Input.GetKeyDown(KeyCode.V))
         { //Start of the V Loop
             str1 = "";
             str2 = "";
+            str3 = "";
             toggle1 = false;
             toggle2 = false;
+            toggle3 = false;
 
         } //End of the V Loop
 
@@ -525,71 +592,115 @@ public class Monopoly : MonoBehaviour
             //bool bidder_player3_active = false; 
         } //End of the 3 Loop 
 
-        if (Input.GetKeyDown(KeyCode.Space)) //Start of Space Bar Loop  
-        { // START OF GETKEYDOWN LOOP (SPACE BAR)
+        void RollDice ()
+        {
 
-            cupsInTheSink = cupsInTheSink + 10;
-            doubles = false;
-            turns_counter = turns_counter + 1;
-            dice1 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
-            dice2 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
-            dice_total = dice1 + dice2;
+            //if (Input.GetKeyDown(KeyCode.Space)) //Start of Space Bar Loop  
+            //{ // START OF GETKEYDOWN LOOP (SPACE BAR)
 
-            //if ( tile_number == 10 && jailed == true) //JK 
-            if (jailed == false) //JK 
-            { //JK 
-                tile_number = tile_number + dice_total;
-            } //JK 
+                tile_number = Convert.ToInt16(array3[turn, 1]); //tells us where is player now!
+                cupsInTheSink = cupsInTheSink + 10;
+                doubles = false;
+                turns_counter = turns_counter + 1;
+                dice1 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
+                dice2 = UnityEngine.Random.Range(1, 7); // 1,7 for 6 sided dice
+                dice_total = dice1 + dice2;
 
-            if (dice1 == dice2) //check for doubles 
-            {
-                doubles = true;
-                jailed = false; //JK 
-                //Debug.Log("DOUBLES!"); 
-                doubles_counter = doubles_counter + 1;
-                //Debug.Log("doubles_counter=" + doubles_counter); 
+                //if ( tile_number == 10 && jailed == true) //JK 
+                if (jailed == false) //JK 
+                { //JK 
+                    tile_number = tile_number + dice_total;
+                } //JK 
 
-                if (doubles_counter == 3) //GO TO JAIL     
+                if (dice1 == dice2) //check for doubles 
                 {
-                    Debug.Log("GO TO JAIL!");
+                    doubles = true;
+                    jailed = false; //JK 
+                    //Debug.Log("DOUBLES!"); 
+                    doubles_counter = doubles_counter + 1;
+                    //Debug.Log("doubles_counter=" + doubles_counter); 
+
+                    if (doubles_counter == 3) //GO TO JAIL     
+                    {
+                        Debug.Log("GO TO JAIL!");
+                        jailed = false;
+                        //JK (leave at false for now)
+                        //until we have a way to get out of jail
+                        //for now jailed is always false, until we allow for jail releases
+                        //via doubles, $50 fine or Get Out Of Jail Free card
+                        doubles_counter = 0;
+                        tile_number = 10;
+                    }
+                }
+
+                if (tile_number == 30) //GO TO JAIL (this checks AFTER doubles check) 
+                {
+                    tile_number = 10;
                     jailed = false;
                     //JK (leave at false for now)
                     //until we have a way to get out of jail
                     //for now jailed is always false, until we allow for jail releases
                     //via doubles, $50 fine or Get Out Of Jail Free card
-                    doubles_counter = 0;
-                    tile_number = 10;
                 }
-            }
 
-            if (tile_number == 30) //GO TO JAIL (this checks AFTER doubles check) 
-            {
-                tile_number = 10;
-                jailed = false;
-                //JK (leave at false for now)
-                //until we have a way to get out of jail
-                //for now jailed is always false, until we allow for jail releases
-                //via doubles, $50 fine or Get Out Of Jail Free card
-            }
-
-            if (tile_number > 39) //check for Pass Go  
-            {
-                tile_number = tile_number - 40;
-            }
+                if (tile_number > 39) //check for Pass Go  
+                {
+                    tile_number = tile_number - 40;
+                }
 
 
-            tile_name = array1[tile_number, 0];
-            tile_cost = array1[tile_number, 4]; //added to fix error below. fixed now?
+                tile_name = array1[tile_number, 0];
+                tile_cost = array1[tile_number, 4]; //added to fix error below. fixed now?
 
-            Debug.Log("1. turns_counter=" + turns_counter);
-            Debug.Log("2. dice1=" + dice1 + " dice2=" + dice2 + " dice_total=" + dice_total);
-            Debug.Log("3. doubles=" + doubles + " doubles_counter=" + doubles_counter);
-            Debug.Log("4a. tile_number=" + tile_number + " tile_name=" + tile_name);
-            Debug.Log("4b. tile_number=" + tile_number + " tile_cost=" + tile_cost); //error?
-            Debug.Log("5. jailed=" + jailed);
+                Debug.Log("1. turns_counter=" + turns_counter);
+                Debug.Log("2. dice1=" + dice1 + " dice2=" + dice2 + " dice_total=" + dice_total);
+                Debug.Log("3. doubles=" + doubles + " doubles_counter=" + doubles_counter);
+                Debug.Log("4a. tile_number=" + tile_number + " tile_name=" + tile_name);
+                Debug.Log("4b. tile_number=" + tile_number + " tile_cost=" + tile_cost); //error?
+                Debug.Log("5. jailed=" + jailed);
 
-            Debug.Log("/////////////////////");
-        } //End of the Space Bar Loop
+                Debug.Log("/////////////////////");
+                //} //End of the Space Bar Loop
+
+                turn = turn + 1;
+                if (turn == 3)
+                {
+                    turn = 1;
+                }
+
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.A)) //Start of A Loop  
+        { // START OF GETKEYDOWN LOOP (A)
+
+            ClearScreenGUI();
+            //tile = Convert.ToInt16(array3[turn, 1]); //this should be moved here
+            Debug.Log("BEFORE array3[0,1] = " + array3[0, 1]);
+            RollDice();
+            array3[0, 1] = tile_number.ToString(); //add string data
+            //array3[0, 1] = "A"; //add string data
+            Debug.Log("Player --A-- Rolled the Dice");
+            Debug.Log("AFTER array3[0,1] = " + array3[0, 1]);
+            ShowArray3();
+
+        } //End of the A Loop
+
+        if (Input.GetKeyDown(KeyCode.L)) //Start of L Loop  
+        { // START OF GETKEYDOWN LOOP (L)
+
+            ClearScreenGUI();
+            //tile = Convert.ToInt16(array3[turn, 1]); //this should be moved here
+            Debug.Log("BEFORE array3[1,1] = " + array3[1, 1]);
+            RollDice();
+            array3[1, 1] = tile_number.ToString(); //add string data
+            //array3[1, 1] = tile.ToString(); //add string data
+            //array3[1, 1] = "L"; //add string data
+            Debug.Log("Player --L-- Rolled the Dice");
+            Debug.Log("AFTER array3[1,1] = " + array3[1, 1]);
+            ShowArray3();
+
+        } //End of the L Loop
     }
 }
 
