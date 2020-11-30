@@ -32,8 +32,9 @@ namespace MNPLY
         int dice2; //result of dice2 roll 
         int dice_total; //result of adding dice1 + dice2 
         int doubles_counter; //keeps track of consecutive doubles  
-                             //int tile_number; //keeps track of consecutive doubles  
-        int tile_number; //Where are you on the game board  
+        int doubles_number = 0; //keeps track of consecutive doubles ~ unused?
+        //int tile_number; //keeps track of consecutive doubles  
+        int tile_number; //Where are you on the game board
         string tile_name; //Name info from DB about the tile you're on   
         string tile_cost; //Cost info from DB about the tile you're on  
         int tile_cost_i; //Cost info (adjusted) from DB about the tile you're on 
@@ -42,7 +43,8 @@ namespace MNPLY
         int money_player1 = 1500;
         int money_player2 = 1500;
         int money_banker = 9000;
-        int money_all = 12000;
+        int money_all = 0;
+        int money_player = 0;
         int auction_money;
         bool auction_active = false; //if the auction is still going
         bool bidder_player1_active = false;
@@ -57,6 +59,7 @@ namespace MNPLY
         bool toggle3 = false;
         int turn = 0;
         int turns_counter; //how many turns played so far by current player 
+        int player = 0;
 
         //string customText;
         //rect = new Rect(0, 0, 400, 200);
@@ -129,10 +132,26 @@ namespace MNPLY
                 Debug.Log("money_all=" + money_all);
                 Debug.Log("before owner=" + M_Data.array1[tile_number, 13]);
 
+                money_player = Convert.ToInt16(M_Data.array3[player, 3]);
+                money_banker = Convert.ToInt16(M_Data.array3[8, 2]);
+                money_all = Convert.ToInt16(M_Data.array3[9, 2]);
+
                 money_player1 = money_player1 - tile_cost_i;
+                money_player = money_player - tile_cost_i;
                 money_banker = money_banker + tile_cost_i;
-                money_all = money_banker + money_player1 + money_player2;
+                
+                M_Data.array3[player, 3] = money_player.ToString(); //add string data
+                M_Data.array3[8, 2] = money_banker.ToString(); //add string data
+                M_Data.array3[9, 2] = money_all.ToString(); //add string data
                 M_Data.array1[tile_number, 13] = "playerX"; //Sami
+
+                money_player1 = Convert.ToInt16(M_Data.array3[1, 3]);
+                money_player2 = Convert.ToInt16(M_Data.array3[2, 3]);
+                money_banker = Convert.ToInt16(M_Data.array3[8, 2]);
+
+                money_all = money_banker + money_player1 + money_player2;
+
+                M_Data.array3[9, 3] = money_all.ToString(); //add string data
 
                 Debug.Log("after owner=" + M_Data.array1[tile_number, 13]);
                 Debug.Log("after purchase");
@@ -377,9 +396,9 @@ namespace MNPLY
 
             if (Input.GetKeyDown(KeyCode.Z))
             { //Start of the Z Loop
-                for (int i = 0; i < 4; i++) //(rows) tiles
+                for (int i = 0; i < 10; i++) //(rows) tiles
                 {
-                    for (int j = 0; j < 4; j++) //(columns) info on each tile
+                    for (int j = 0; j < 10; j++) //(columns) info on each tile
                     {
                         str3 = str3 + M_Data.array3[i, j] + " ";
                     }
@@ -393,9 +412,9 @@ namespace MNPLY
             void ShowArray3()
             //if (Input.GetKeyDown(KeyCode.Z))
             { //Start of the Z Loop
-                for (int i = 0; i < 4; i++) //(rows) tiles
+                for (int i = 0; i < 10; i++) //(rows) tiles
                 {
-                    for (int j = 0; j < 4; j++) //(columns) info on each tile
+                    for (int j = 0; j < 10; j++) //(columns) info on each tile
                     {
                         str3 = str3 + M_Data.array3[i, j] + " ";
                     }
@@ -437,7 +456,7 @@ namespace MNPLY
             } //End of the C Loop
 
             void ClearScreenGUI()  //clear GUI
-                                   //if (Input.GetKeyDown(KeyCode.V))
+            //if (Input.GetKeyDown(KeyCode.V))
             { //Start of the V Loop
                 str1 = "";
                 str2 = "";
@@ -541,6 +560,8 @@ namespace MNPLY
                     jailed = false; //JK 
                     //Debug.Log("DOUBLES!"); 
                     doubles_counter = doubles_counter + 1;
+                    //doubles_number = doubles_number + 1;
+                    //M_Data.array3[player, 2] = M_Data.array3[player, 2] + 1;
                     //Debug.Log("doubles_counter=" + doubles_counter); 
 
                     if (doubles_counter == 3) //GO TO JAIL     
@@ -569,20 +590,22 @@ namespace MNPLY
                 if (tile_number > 39) //check for Pass Go  
                 {
                     tile_number = tile_number - 40;
+                    money_player = money_player + 200;
+                    money_banker = money_banker - 200;
                 }
 
 
                 tile_name = M_Data.array1[tile_number, 0];
                 tile_cost = M_Data.array1[tile_number, 4]; //added to fix error below. fixed now?
 
-                Debug.Log("1. turns_counter=" + turns_counter);
+                //Debug.Log("1. turns_counter=" + turns_counter);
                 Debug.Log("2. dice1=" + dice1 + " dice2=" + dice2 + " dice_total=" + dice_total);
                 Debug.Log("3. doubles=" + doubles + " doubles_counter=" + doubles_counter);
                 Debug.Log("4a. tile_number=" + tile_number + " tile_name=" + tile_name);
-                Debug.Log("4b. tile_number=" + tile_number + " tile_cost=" + tile_cost); //error?
-                Debug.Log("5. jailed=" + jailed);
+                //Debug.Log("4b. tile_number=" + tile_number + " tile_cost=" + tile_cost); //error?
+                //Debug.Log("5. jailed=" + jailed);
 
-                Debug.Log("/////////////////////");
+                //Debug.Log("/////////////////////");
                 //} //End of the Space Bar Loop
 
                 turn = turn + 1;
@@ -597,15 +620,39 @@ namespace MNPLY
             if (Input.GetKeyDown(KeyCode.A)) //Start of A Loop  
             { // START OF GETKEYDOWN LOOP (A)
 
+                player = 1;
                 ClearScreenGUI();
-                //tile = Convert.ToInt16(M_Data.array3[turn, 1]); //this should be moved here
-                tile_number = Convert.ToInt16(M_Data.array3[0, 1]);
-                Debug.Log("BEFORE M_Data.array3[0,1] = " + M_Data.array3[0, 1]);
+                //tile = Convert.ToInt16(M_Data.array3[player, 1]); //this should be moved here
+                tile_number = Convert.ToInt16(M_Data.array3[player, 1]);
+                doubles_counter = Convert.ToInt16(M_Data.array3[player, 2]);
+                money_player = Convert.ToInt16(M_Data.array3[player, 3]);
+                dice1 = Convert.ToInt16(M_Data.array3[player, 5]);
+                dice2 = Convert.ToInt16(M_Data.array3[player, 6]);
+                dice_total = Convert.ToInt16(M_Data.array3[player, 7]);
+                money_banker = Convert.ToInt16(M_Data.array3[8, 2]);
+                money_all = Convert.ToInt16(M_Data.array3[9, 2]);
+                Debug.Log("BEFORE M_Data.array3[player,1] = " + M_Data.array3[player, 1]);
                 RollDice();
-                M_Data.array3[0, 1] = tile_number.ToString(); //add string data
-                //M_Data.array3[0, 1] = "A"; //add string data
+                M_Data.array3[player, 1] = tile_number.ToString(); //add string data
+                M_Data.array3[player, 2] = doubles_counter.ToString(); //add string data
+                M_Data.array3[player, 3] = money_player.ToString(); //add string data
+                M_Data.array3[player, 5] = dice1.ToString(); //add string data
+                M_Data.array3[player, 6] = dice2.ToString(); //add string data
+                M_Data.array3[player, 7] = dice_total.ToString(); //add string data
+                M_Data.array3[8, 2] = money_banker.ToString(); //add string data
+                //M_Data.array3[9, 2] = money_all.ToString(); //add string data
+                //M_Data.array3[player, 1] = "A"; //add string data
                 Debug.Log("Player --A-- Rolled the Dice");
-                Debug.Log("AFTER M_Data.array3[0,1] = " + M_Data.array3[0, 1]);
+                Debug.Log("AFTER M_Data.array3[player,1] = " + M_Data.array3[player, 1]);
+
+                money_player1 = Convert.ToInt16(M_Data.array3[1, 3]);
+                money_player2 = Convert.ToInt16(M_Data.array3[2, 3]);
+                money_banker = Convert.ToInt16(M_Data.array3[8, 2]);
+
+                money_all = money_banker + money_player1 + money_player2;
+
+                M_Data.array3[9, 3] = money_all.ToString(); //add string data
+
                 ShowArray3();
 
             } //End of the A Loop
@@ -613,16 +660,39 @@ namespace MNPLY
             if (Input.GetKeyDown(KeyCode.L)) //Start of L Loop  
             { // START OF GETKEYDOWN LOOP (L)
 
+                player = 2;
                 ClearScreenGUI();
-                //tile = Convert.ToInt16(M_Data.array3[turn, 1]); //this should be moved here
-                tile_number = Convert.ToInt16(M_Data.array3[1, 1]);
-                Debug.Log("BEFORE M_Data.array3[1,1] = " + M_Data.array3[1, 1]);
+                //tile = Convert.ToInt16(M_Data.array3[player, 1]); //this should be moved here
+                tile_number = Convert.ToInt16(M_Data.array3[player, 1]);
+                doubles_counter = Convert.ToInt16(M_Data.array3[player, 2]);
+                money_player = Convert.ToInt16(M_Data.array3[player, 3]);
+                dice1 = Convert.ToInt16(M_Data.array3[player, 5]);
+                dice2 = Convert.ToInt16(M_Data.array3[player, 6]);
+                dice_total = Convert.ToInt16(M_Data.array3[player, 7]);
+                money_banker = Convert.ToInt16(M_Data.array3[8, 2]);
+                money_all = Convert.ToInt16(M_Data.array3[9, 2]);
+                Debug.Log("BEFORE M_Data.array3[player,1] = " + M_Data.array3[player, 1]);
                 RollDice();
-                M_Data.array3[1, 1] = tile_number.ToString(); //add string data
-                //M_Data.array3[1, 1] = tile.ToString(); //add string data
-                //M_Data.array3[1, 1] = "L"; //add string data
+                M_Data.array3[player, 1] = tile_number.ToString(); //add string data
+                M_Data.array3[player, 2] = doubles_counter.ToString(); //add string data
+                M_Data.array3[player, 3] = money_player.ToString(); //add string data
+                M_Data.array3[player, 5] = dice1.ToString(); //add string data
+                M_Data.array3[player, 6] = dice2.ToString(); //add string data
+                M_Data.array3[player, 7] = dice_total.ToString(); //add string data
+                M_Data.array3[8, 2] = money_banker.ToString(); //add string data
+                //M_Data.array3[9, 2] = money_all.ToString(); //add string data
+                //M_Data.array3[player, 1] = "A"; //add string data
                 Debug.Log("Player --L-- Rolled the Dice");
-                Debug.Log("AFTER M_Data.array3[1,1] = " + M_Data.array3[1, 1]);
+                Debug.Log("AFTER M_Data.array3[player,1] = " + M_Data.array3[player, 1]);
+
+                money_player1 = Convert.ToInt16(M_Data.array3[1, 3]);
+                money_player2 = Convert.ToInt16(M_Data.array3[2, 3]);
+                money_banker = Convert.ToInt16(M_Data.array3[8, 2]);
+
+                money_all = money_banker + money_player1 + money_player2;
+
+                M_Data.array3[9, 3] = money_all.ToString(); //add string data
+
                 ShowArray3();
 
             } //End of the L Loop

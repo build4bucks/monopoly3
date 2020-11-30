@@ -76,12 +76,18 @@ namespace MNPLY
         };
 
         //create database
-        public static string[,] array3 = new string[4, 4] //array of Monopoly data from the original version of the game
+        public static string[,] array3 = new string[10, 10] //array of Monopoly data from the original version of the game
         {
-        { "1","0","0","0"},     //not used
-        { "2","0","0","0"},     //player # //tile #
-        { "3","0","0","0"},     //player # //tile #
-        { "4","0","0","0"}      //not used
+        { "Player","Tile","Doubles","Money","NA","Dice1","Dice2","Dice3","0","0"},     //not used
+        { "1","0","0","1500","0","0","0","0","0","0"},     //player # //tile #
+        { "2","0","0","1500","0","0","0","0","0","0"},     //player # //tile #
+        { "3","0","0","0","0","0","0","0","0","0"},     //not used        
+        { "4","0","0","0","0","0","0","0","0","0"},     //not used
+        { "5","0","0","0","0","0","0","0","0","0"},     //not used
+        { "6","0","0","0","0","0","0","0","0","0"},     //not used
+        { "7","0","0","0","0","0","0","0","0","0"},     //not used
+        { "8","money_bank","9000","0","0","0","0","0","0","0"},     //not used
+        { "9","money_all","0","0","0","0","0","0","0","0"},     //not used
         };
 
         // Start is called before the first frame update
